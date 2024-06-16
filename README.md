@@ -1,6 +1,8 @@
 # Homeassistant_OpenEpaperLink_NibeStats
 Displaying values from Nibe F730 horizontally on a 2.9" ePaper display.
 
+The text is in Swedish and the meaning is: Outdoor temp, Indoor temp, Hotwater temp, Charging temp.
+
 Needed:
 
 * GothamRnd-Bold.ttf in Media folder.
