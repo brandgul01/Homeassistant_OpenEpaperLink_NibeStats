@@ -1,0 +1,131 @@
+alias: Automation Nibe Display Horizontal
+description: Displaying values from Nibe F730 horizontally on a 2.9" ePaper display.
+trigger:
+  - platform: time_pattern
+    minutes: /10
+condition:
+  - condition: time
+    after: "06:25:00"
+    before: "23:00:00"
+action:
+  - service: open_epaper_link.drawcustom
+    data:
+      background: white
+      rotate: 0
+      payload:
+        - type: text
+          value: UTE
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 38
+          "y": 20
+          size: 12
+          color: black
+          anchor: mt
+        - type: icon
+          value: >-
+            weather-{{ state_attr('sensor.weatherman_data_tag','wm_cond_now') |
+            string }}
+          x: 23
+          "y": 40
+          size: 30
+          color: >-
+            {{ 'red' if state_attr('sensor.weatherman_data_tag','wm_cond_now')
+            in severe_weather else 'black' }}
+#        - type: icon
+#          value: mdi:weather-partly-cloudy
+#          x: 23
+#          "y": 40
+#          size: 30
+#          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.f730_cu_3x400v_current_outd_temp_bt1') | round(1)
+            }}°C
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 45
+          "y": 80
+          size: 18
+          color: black
+          anchor: mt
+        - type: text
+          value: INNE
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 108
+          "y": 20
+          size: 12
+          color: black
+          anchor: mt
+        - type: icon
+          value: mdi:thermometer
+          x: 93
+          "y": 40
+          size: 30
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.f730_cu_3x400v_room_temperature_bt50') | round(1)
+            }}°C
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 115
+          "y": 80
+          size: 18
+          color: black
+          anchor: mt
+        - type: text
+          value: TOPP
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 178
+          "y": 20
+          size: 12
+          color: black
+          anchor: mt
+        - type: icon
+          value: mdi:water
+          x: 163
+          "y": 40
+          size: 30
+          color: black
+        - type: text
+          value: "{{ states('sensor.f730_cu_3x400v_hot_water_top_bt7') | round(1) }}°C"
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 185
+          "y": 80
+          size: 18
+          color: black
+          anchor: mt
+        - type: text
+          value: LADDNING
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 248
+          "y": 20
+          size: 12
+          color: black
+          anchor: mt
+        - type: icon
+          value: mdi:water-pump
+          x: 233
+          "y": 40
+          size: 30
+          color: black
+        - type: text
+          value: >-
+            {{ states('sensor.f730_cu_3x400v_hot_water_charging_bt6') | round(1)
+            }}°C
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 255
+          "y": 80
+          size: 18
+          color: black
+          anchor: mt
+        - type: text
+          value: "{{ now().strftime('%-d/%-m-%H:%M') }}  |  NIBE F730"
+          font: ../../media/GothamRnd-Bold.ttf
+          x: 150
+          "y": 110
+          size: 15
+          color: black
+          anchor: mt
+    target:
+      entity_id:
+        - open_epaper_link.0000021EEBED3B12
+mode: restart
